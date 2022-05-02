@@ -5,8 +5,11 @@ const size = {
 };
 
 const color = {
-  main: { primary: 'red', secondary: 'green' },
+  main: { primary: 'green', secondary: 'blue' },
+  error: { primary: 'red', secondary: 'red' },
 };
+
+const borderRadius = '0.5rem';
 
 export const styledTheme = {
   device: {
@@ -15,4 +18,5 @@ export const styledTheme = {
     lg: `@media screen and (min-width: ${size.lg})`,
   },
   color,
+  borderRadius,
 };

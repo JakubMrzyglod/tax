@@ -10,9 +10,10 @@ declare module 'styled-components' {
     color: {
       main: Colors;
       // background: Colors;
-      // error: Colors;
+      error: Colors;
       // text: Colors;
     };
+    borderRadius: string;
   }
 }
 

@@ -1,3 +1,6 @@
+import { Button } from 'components/button';
+import { Input } from 'components/input';
+import { FC } from 'react';
 import styled from 'styled-components';
 
 const AuthBox = styled.div`
@@ -9,14 +12,28 @@ const AuthBox = styled.div`
 `;
 
 const AuthFormBox = styled.div`
-  border-radius: 2px;
-  border: 1px solid #dadce0;
+  border-radius: ${({ theme }) => theme.borderRadius};
+  border: 0.1rem solid #dadce0;
   max-width: 300px; // TODO: fix it
   width: 100%; // TODO: fix it
+  padding: 2rem;
 `;
 
-export const App = () => (
+const SignInWithGoogleBtn = styled(Button).attrs({
+  children: 'Sign In With Google',
+})`
+  margin-bottom: 1.5rem;
+`;
+
+const LoginButton: FC = () => <Button {...{ text: 'Login' }} />;
+
+export const App: FC = () => (
   <AuthBox>
-    <AuthFormBox>APP</AuthFormBox>
+    <AuthFormBox>
+      <SignInWithGoogleBtn />
+      <Input.email />
+      <Input.password />
+      <LoginButton />
+    </AuthFormBox>
   </AuthBox>
 );
