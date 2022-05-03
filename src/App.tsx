@@ -1,3 +1,10 @@
-import { Auth } from 'modules/auth';
+import { useUserContext } from 'common/contexts/user';
 
-export const App = () => <Auth />;
+export const App = () => {
+  const { logout } = useUserContext();
+  return (
+    <>
+      <button {...{ onClick: logout }}>logout</button>
+    </>
+  );
+};
