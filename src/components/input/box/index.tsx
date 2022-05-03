@@ -1,5 +1,6 @@
 import { InputBoxProps } from 'components/input/box/types';
 import { FC } from 'react';
+import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 
 type InputTextProps = {
@@ -54,11 +55,12 @@ export const InputLabel = styled.div.attrs<InputLabelProps>(({ label }) => ({
   font-weight: 600;
 `;
 
-export const InputBox: FC<InputBoxProps> = ({ label }) => {
+export const InputBox: FC<InputBoxProps> = ({ label, name }) => {
+  const { register } = useFormContext();
   return (
     <>
       <InputLabel {...{ label }} />
-      <InputText />
+      <InputText {...register(name)} />
       <InputError />
     </>
   );
