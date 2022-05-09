@@ -16,7 +16,7 @@ jobs:
         run: npm --prefix ./be ci
       - name: install firebase-tools
         run: npm i firebase-tools -g
-      # - name: Create SA key
-      #   run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAXX_CE7CF }}' >> $HOME/gcloud.json
+      - name: Create SA key
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAXX_CE7CF }}' >> $HOME/gcloud.json
       - name: Deploy Cloud Functions
-        run: export GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAXX_CE7CF }} && firebase deploy --only functions
+        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && firebase deploy --only functions
