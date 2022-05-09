@@ -5,7 +5,9 @@ name: Deploy dev to Firebase Hosting on merge to dev
 on:
   push:
     branches:
-      - devv
+      - dev
+    paths:
+      - fe/**
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
