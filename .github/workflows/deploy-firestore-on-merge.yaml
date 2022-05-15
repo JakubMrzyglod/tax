@@ -1,0 +1,20 @@
+name: Deploy Firebase firestore
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - firestore.json
+      - firestore.indexes.json
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install firebase-tools
+        run: npm i firebase-tools -g
+      - name: Create SA key
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAXX_CE7CF }}' >> $HOME/gcloud.json
+      - name: Deploy Cloud Functions
+        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && firebase deploy --only firestore
