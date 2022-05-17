@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "emu:exec": "firebase emulators:exec --only firestore,storage",
+    "test": "firebase emulators:exec --only firestore,storage \"jest --config=jest.rules.config.js --runInBand --silent --forceExit --detectOpenHandles\" --project=test",
+    "test:debug": "firebase emulators:exec --only firestore,storage \"jest --config=jest.rules.config.js --runInBand --silent --detectOpenHandles --logHeapUsage --verbose\" --project=test"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^2.0.2",
+    "@types/faker": "^5.5.9",
+    "@types/jest": "^27.5.1",
+    "faker": "^5.5.0",
+    "firebase": "^9.8.1",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "tsc": "^2.0.4"
+  }
+}

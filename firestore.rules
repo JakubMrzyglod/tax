@@ -4,5 +4,22 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+    match /companies/{ownerId}/{allPaths=**} {
+      function isOwner() {
+        return request.auth.uid == ownerId
+      }
+
+      function isValidCompany() {
+        let docData = request.resource.data;
+        return docData.taxNumber is string
+        && docData.name is string
+        && docData.city is string
+        && docData.address is string
+      }
+
+      allow read: if isOwner()
+      allow write, update: if isOwner() && isValidCompany()
+
+    }
   }
 }
