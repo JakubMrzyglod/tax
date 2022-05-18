@@ -1,10 +1,6 @@
+const baseConfig = require('./jest.config');
+
 module.exports = {
-  testEnvironment: "node",
-  verbose: false,
-  testRegex: ".rules.test.ts$",
-  moduleFileExtensions: ["ts", "js", "json"],
-  transform: {
-    "^.+\\.(t|j)s$": "ts-jest",
-  },
-  roots: ["<rootDir>"],
+  ...baseConfig,
+  testRegex: '.rules.test.ts$',
 };
