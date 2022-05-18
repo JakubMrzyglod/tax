@@ -57,11 +57,16 @@ export const InputLabel = styled.div.attrs<InputLabelProps>(({ label }) => ({
 
 export const InputBox: FC<InputBoxProps> = ({ label, name }) => {
   const { register } = useFormContext();
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  const error = errors?.[name]?.message;
   return (
     <>
       <InputLabel {...{ label }} />
-      <InputText {...register(name)} />
-      <InputError />
+      <InputText {...{ ...register(name), error }} />
+      <InputError {...{ error }} />
     </>
   );
 };

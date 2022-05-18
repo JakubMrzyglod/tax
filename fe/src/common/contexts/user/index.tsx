@@ -21,8 +21,6 @@ export const UserProvider: UserProviderFC = ({ children }) => {
     signOut(auth);
   };
 
-  const value = { uid, logout };
-
   if (!uid) {
     if (uid === undefined) {
       return <Loading show />;
@@ -30,6 +28,8 @@ export const UserProvider: UserProviderFC = ({ children }) => {
       return <Auth />;
     }
   }
+
+  const value = { uid, logout };
 
   return <Provider {...{ value }}>{children}</Provider>;
 };

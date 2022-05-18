@@ -9,13 +9,11 @@ import { FC } from 'react';
 export const SignInWithPassword: FC = () => {
   const onSubmit = ({ email, password }: SignInWithPasswordFormBody) =>
     signInWithEmailAndPassword(auth, email, password); // TODO: add combine accounts handler
-  const text = 'Login';
-
   return (
     <HookForm {...{ onSubmit }}>
       <Input.Email />
       <Input.Password />
-      <Button {...{ text }} />
+      <Button {...{ text: 'Login' }} />
     </HookForm>
   );
 };

@@ -11,8 +11,8 @@ export const Form: FC<FormProps> = ({ children, methods, onSubmit }) => {
   );
 };
 
-export const HookForm: FC<HookFormProps> = (props) => {
-  const methods = useForm();
+export const HookForm: FC<HookFormProps> = ({ resolver, ...props }) => {
+  const methods = useForm({ resolver });
 
   return <Form {...{ methods, ...props }} />;
 };
