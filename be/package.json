@@ -2,20 +2,19 @@
   "name": "functions",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
-    "build": "tsc",
-    "serve": "npm run build && firebase emulators:start --only functions",
-    "shell": "npm run build && firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "lint:fix": "npm run lint -- --fix",
+    "build": "tsc --build tsconfig.build.json && tscpaths -p tsconfig.json -s ./src -o ./lib",
+    "emu:exec": "firebase emulators:exec --only firestore,storage,auth",
+    "test": "npm run emu:exec \"jest --config=jest.config.js --runInBand --silent --logHeapUsage --forceExit\" --project=test",
+    "test:fn": "npm run emu:exec \"jest --config=jest.functions.config.js --runInBand --logHeapUsage --detectOpenHandles \""
   },
   "engines": {
     "node": "16"
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase-admin": "^9.8.0",
-    "firebase-functions": "^3.14.1"
+    "firebase-admin": "^10.2.0",
+    "firebase-functions": "^3.21.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.22.0",
@@ -26,10 +25,13 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-prettier": "^4.0.0",
-    "firebase-functions-test": "^0.2.0",
+    "firebase-functions-test": "^2.0.2",
     "jest": "^28.1.0",
+    "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
-    "typescript": "^3.8.0"
+    "ts-jest": "^28.0.2",
+    "tscpaths": "^0.0.9",
+    "typescript": "^4.6.4"
   },
   "private": true
 }

@@ -1,7 +1,11 @@
-import * as functions from 'firebase-functions';
+import { firestore, https } from 'firebase-functions';
+import { TriggerPath } from './constants/firestore';
+import { onUpdateCompanyHandler } from './functions/onUpdateCompany';
 
-export const test = functions
-  .region('europe-west3')
-  .https.onRequest((request, response) => {
-    response.send('Ok');
-  });
+export const test = https.onRequest((request, response) => {
+  response.send('Ok');
+});
+
+export const onUpdateCompany = firestore
+  .document(TriggerPath.companies)
+  .onCreate(onUpdateCompanyHandler);
