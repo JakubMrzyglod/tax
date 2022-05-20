@@ -1,11 +1,11 @@
 import { firestore, https } from 'firebase-functions';
 import { TriggerPath } from './constants/firestore';
-import { onUpdateCompanyHandler } from './functions/onUpdateCompany';
+import { onCreateCompanyHandler } from './functions/onUpdateCompany';
 
 export const test = https.onRequest((request, response) => {
   response.send('Ok');
 });
 
-export const onUpdateCompany = firestore
+export const onCreateCompany = firestore
   .document(TriggerPath.companies)
-  .onCreate(onUpdateCompanyHandler);
+  .onCreate(onCreateCompanyHandler);

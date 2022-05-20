@@ -4,6 +4,7 @@ import { Auth } from 'modules/auth';
 import { UserContextType, UserProviderFC } from 'common/contexts/user/types';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { Loading } from 'components/loading';
+import { Onboarding } from 'modules/onboarding';
 
 const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -11,13 +12,23 @@ const { Provider } = UserContext;
 
 export const UserProvider: UserProviderFC = ({ children }) => {
   const [uid, setUid] = useState<string>();
+  const [isOnboarded, setIsOnboarded] = useState<boolean>();
 
   useEffect(() => {
-    return onAuthStateChanged(auth, (user) => setUid(user?.uid ?? ''));
+    return onAuthStateChanged(auth, async (user) => {
+      setUid(user?.uid ?? '');
+      const idTokenResult = await user?.getIdTokenResult(true);
+      if (idTokenResult?.claims?.isOnboarded !== isOnboarded) {
+        setIsOnboarded(
+          idTokenResult?.claims?.isOnboarded as boolean | undefined
+        );
+      }
+    });
   }, []);
 
   const logout = () => {
     setUid(undefined);
+    setIsOnboarded(undefined);
     signOut(auth);
   };
 
@@ -27,6 +38,11 @@ export const UserProvider: UserProviderFC = ({ children }) => {
     } else {
       return <Auth />;
     }
+  }
+
+  if (!isOnboarded) {
+    const setOnboarded = () => setIsOnboarded(true);
+    return <Onboarding {...{ setOnboarded, uid }} />;
   }
 
   const value = { uid, logout };

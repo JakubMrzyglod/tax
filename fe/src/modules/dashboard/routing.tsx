@@ -1,11 +1,10 @@
-import { Onboarding } from 'modules/onboarding';
 import { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 export const DashboardRouting: FC = () => {
   return (
     <Routes>
-      <Route {...{ path: '/', element: <Onboarding /> }} />
+      <Route {...{ path: '/', element: <>dashboard</> }} />
     </Routes>
   );
 };

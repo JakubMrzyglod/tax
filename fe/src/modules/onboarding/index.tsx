@@ -1,27 +1,20 @@
-import { useUserContext } from 'common/contexts/user';
 import { FS_DOC } from 'common/firebase/constants';
 import { Button } from 'components/button';
-import { ContentBox } from 'components/content-box';
 import { HookForm } from 'components/form';
 import { Input } from 'components/input';
 import { setDoc } from 'firebase/firestore';
+import { OnboardingContentBox } from 'modules/onboarding/elements/onboarding-content-box';
+import { OnBoardingProps } from 'modules/onboarding/types';
 import { resolver } from 'modules/onboarding/validation';
 import { FC } from 'react';
-import styled from 'styled-components';
 import { Company } from 'types/company';
 
-const OnboardingContentBox = styled(ContentBox)`
-  height: 100vh;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 100px;
-  box-sizing: border-box;
-`;
-
-export const Onboarding: FC = () => {
-  const { uid } = useUserContext();
+export const Onboarding: FC<OnBoardingProps> = ({ setOnboarded, uid }) => {
   const companyDoc = FS_DOC.companies(uid);
-  const onSubmit = (data: Company) => setDoc(companyDoc, data);
+  const onSubmit = async (data: Company) => {
+    await setDoc(companyDoc, data);
+    setOnboarded();
+  };
 
   return (
     <OnboardingContentBox>

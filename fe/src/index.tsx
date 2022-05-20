@@ -14,8 +14,7 @@ root.render(
   <StrictMode>
     <BrowserRouter>
       <CustomProviders>
-        <Onboarding />
-        {/* <Dashboard /> */}
+        <Dashboard />
       </CustomProviders>
     </BrowserRouter>
   </StrictMode>

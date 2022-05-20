@@ -28,6 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "emu:start": "npm run --prefix ../be build && firebase emulators:start --only firestore,storage,functions,auth",
     "start:emu": "firebase emulators:exec \"react-scripts start\""
   },
   "eslintConfig": {
