@@ -1,8 +1,11 @@
-import * as functions from 'firebase-functions';
+import { firestore, https } from 'firebase-functions';
+import { TriggerPath } from './constants/firestore';
+import { onCreateCompanyHandler } from './functions/onUpdateCompany';
 
-export const helloWorld = functions
-  .region('europe-west3')
-  .https.onRequest((request, response) => {
-    functions.logger.info('Hello logs!', { structuredData: true });
-    response.send('Hello from Firebase!');
-  });
+export const test = https.onRequest((request, response) => {
+  response.send('Ok');
+});
+
+export const onCreateCompany = firestore
+  .document(TriggerPath.companies)
+  .onCreate(onCreateCompanyHandler);

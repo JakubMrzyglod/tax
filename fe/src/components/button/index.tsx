@@ -3,6 +3,7 @@ import styled from 'styled-components';
 type ButtonProps = {
   text: string;
 };
+
 export const Button = styled.button.attrs<ButtonProps>(({ text }) => ({
   children: text,
 }))<ButtonProps>`

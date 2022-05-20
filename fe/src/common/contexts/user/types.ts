@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 
 export type UserContextType = {
-  uid: string | undefined;
+  uid: string;
   logout: () => void;
 };
 

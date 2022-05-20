@@ -1,0 +1,33 @@
+name: Test on pull request
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: install dependencies
+        run: |
+          npm i
+          npm --prefix ./be i
+          npm --prefix ./fe i
+      - name: Lint
+        run: npm run --prefix ./be lint
+      - name: install firebase-tools
+        run: npm i firebase-tools -g
+      - name: Test Rules
+        run: npm run test
+      - name: Test functions
+        run: npm run --prefix ./be test
+      - name: Test Builds
+        run: |
+          npm run --prefix ./be build
+          npm run --prefix ./fe build
