@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-SET CI=true && npm --prefix ./fe run build
 cd ./be && npx --prefix lint-staged
+cd ../fe && CI=true && npm run build
