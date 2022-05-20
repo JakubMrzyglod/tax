@@ -21,6 +21,7 @@ module.exports = {
   ignorePatterns: [
     '/lib/**/*', // Ignore built files.
     'jest.api.config.js',
+    'jest.config.js',
     'jest.functions.config.js',
   ],
   plugins: ['@typescript-eslint', 'import', 'prettier', 'jest'],
