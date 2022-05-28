@@ -1,6 +1,6 @@
 export type Company = {
   name: string;
-  taxNumber: string;
+  taxId: string;
   address: string;
   city: string;
 };

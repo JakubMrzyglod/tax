@@ -1,13 +1,19 @@
-name: Deploy Cloud Functions
+name: Test BE on pull request
 on:
-  push:
-    branches:
-      - dev
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
     paths:
-      - be/**
+      - 'be/src/**'
+      - 'be/package.json'
+      - 'be/jest.config.js'
+      - 'be/jest.functions.config.js'
+      - 'jest.config.js'
 
 jobs:
-  build_and_deploy:
+  lint_and_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,11 +29,15 @@ jobs:
             ${{ runner.os }}-npm
             ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
             ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/be/package-lock.json') }}
-      - name: Install dependencies
-        run: npm --prefix ./be ci
+      - name: install dependencies
+        run: |
+          npm i
+          npm --prefix ./be i
+      - name: Lint
+        run: npm run --prefix ./be lint
       - name: install firebase-tools
         run: npm i firebase-tools -D
-      - name: Create SA key
-        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAXX_CE7CF }}' >> $HOME/gcloud.json
-      - name: Deploy Cloud Functions
-        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && firebase deploy --only functions
+      - name: Test functions
+        run: npm run --prefix ./be test
+      - name: Test Builds
+        run: npm run --prefix ./be build

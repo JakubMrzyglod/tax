@@ -1,7 +1,7 @@
 import { address, company, random } from 'faker';
 
 export const getCompany = () => ({
-  taxNumber: random.word(),
+  taxId: random.word(),
   name: company.companyName(),
   city: `${address.zipCode()} ${address.city()}`,
   address: address.streetAddress(),

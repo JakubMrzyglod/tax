@@ -5,7 +5,7 @@ const isString = string().required('Is Required');
 
 const schema = object({
   name: isString,
-  taxNumber: isString,
+  taxId: isString,
   address: isString,
   city: isString,
 });

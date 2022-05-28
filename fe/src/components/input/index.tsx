@@ -7,7 +7,7 @@ export const Input = {
   Email: InputBoxWrapper({ label: 'Email', name: 'email' }),
   Password: InputBoxWrapper({ label: 'Password', name: 'password' }),
   CompanyName: InputBoxWrapper({ label: 'Company Name', name: 'name' }),
-  TaxNumber: InputBoxWrapper({ label: 'Tax number', name: 'taxNumber' }),
+  TaxId: InputBoxWrapper({ label: 'Tax ID', name: 'taxId' }),
   Address: InputBoxWrapper({ label: 'Address', name: 'address' }),
   City: InputBoxWrapper({ label: 'City', name: 'city' }),
 };
