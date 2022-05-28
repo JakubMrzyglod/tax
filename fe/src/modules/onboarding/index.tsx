@@ -20,7 +20,7 @@ export const Onboarding: FC<OnBoardingProps> = ({ setOnboarded, uid }) => {
     <OnboardingContentBox>
       <HookForm {...{ onSubmit, resolver }}>
         <Input.CompanyName />
-        <Input.TaxNumber />
+        <Input.TaxId />
         <Input.City />
         <Input.Address />
         <Button {...{ text: 'Submit' }} />

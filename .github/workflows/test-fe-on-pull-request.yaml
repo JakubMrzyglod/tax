@@ -1,0 +1,34 @@
+name: Test FE on pull request
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+    paths:
+      - 'fe/src/**'
+      - 'fe/package.json'
+
+jobs:
+  lint_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Cache npm dependencies
+        uses: actions/cache@v2.1.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/fe/package-lock.json') }}
+          restore-key: |
+            ${{ runner.os }}-npm
+            ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/fe/package-lock.json') }}
+      - name: install dependencies
+        run: |
+          npm i
+          npm --prefix ./fe i
+      - name: Test Builds
+        run: npm run --prefix ./fe build
