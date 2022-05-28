@@ -26,6 +26,7 @@ service cloud.firestore {
       allow read: if isOwner()
       allow write, update: if isOwner() && isValidCompany()
 
+
       match /schedules/{scheduleId} {
         function hasValidSheduleKeys () {
           return data().keys().hasOnly(['name'])
@@ -38,6 +39,7 @@ service cloud.firestore {
         }
 
         allow write, update: if isOwner() && isSheduleGropu()
+
 
         match /months/{monthId} {
           allow write, update, read: if isOwner();

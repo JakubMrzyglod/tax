@@ -38,8 +38,8 @@ jobs:
       - name: Cache build
         uses: actions/cache@v2.1.2
         with:
-          path: ~/fe/build
-          key: ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}
+          path: ~/**/fe/build
+          key: ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}-${{ hashFiles('**/fe/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-dev-
             ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}
