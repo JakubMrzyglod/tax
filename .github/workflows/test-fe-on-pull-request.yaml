@@ -39,11 +39,10 @@ jobs:
         uses: actions/cache@v2.1.2
         with:
           path: ~/**/fe/build
-          key: ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/src/**') }}-${{ hashFiles('**/fe/package-lock.json') }}
+          key: ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}-${{ hashFiles('**/fe/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-dev-
-            ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/src/**') }}
-            ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/src/**') }}-${{ hashFiles('**/fe/package-lock.json') }}
+            ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}
       - name: install dependencies
         run: |
           npm i
