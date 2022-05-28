@@ -15,8 +15,16 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16.x
+      - name: Cache npm dependencies
+        uses: actions/cache@v2.1.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm
+            ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
       - name: install firebase-tools
-        run: npm i firebase-tools -g
+        run: npm i firebase-tools -D
       - name: Create SA key
         run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAXX_CE7CF }}' >> $HOME/gcloud.json
       - name: Deploy Cloud Functions

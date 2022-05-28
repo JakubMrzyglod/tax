@@ -1,13 +1,10 @@
 name: Deploy Cloud Functions
 on:
-  pull_request:
-    types:
-      - synchronize
-      - opened
-      - reopened
+  push:
+    branches:
+      - dev
     paths:
-      - firestore.json
-      - firestore.indexes.json
+      - be/**
 
 jobs:
   build_and_deploy:
@@ -17,9 +14,20 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16.x
+      - name: Cache npm dependencies
+        uses: actions/cache@v2.1.2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/be/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm
+            ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/be/package-lock.json') }}
       - name: Install dependencies
-        run: npm i
+        run: npm --prefix ./be ci
       - name: install firebase-tools
-        run: npm i firebase-tools -g
-      - name: Test rules
-        run: npm run test
+        run: npm i firebase-tools -D
+      - name: Create SA key
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAXX_CE7CF }}' >> $HOME/gcloud.json
+      - name: Deploy Cloud Functions
+        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && firebase deploy --only functions
