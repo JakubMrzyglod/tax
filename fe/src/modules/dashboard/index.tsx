@@ -11,7 +11,7 @@ export const Dashboard: FC = () => {
     <DashboardBox>
       <AppBar />
       <ContentBox>
-        <button {...{ onClick: logout }}>logout !</button>
+        <button {...{ onClick: logout }}>logout!</button>
         <DashboardRouting />
       </ContentBox>
     </DashboardBox>
