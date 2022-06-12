@@ -35,14 +35,6 @@ jobs:
             ${{ runner.os }}-npm
             ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
             ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/fe/package-lock.json') }}
-      - name: Cache build
-        uses: actions/cache@v2.1.2
-        with:
-          path: ~/**/fe/build
-          key: ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}-${{ hashFiles('**/fe/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-dev-
-            ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}
       - name: install dependencies
         run: |
           npm i
