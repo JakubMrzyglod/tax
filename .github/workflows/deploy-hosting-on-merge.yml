@@ -28,14 +28,6 @@ jobs:
             ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
             ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/fe/package-lock.json') }}
       - uses: actions/checkout@v2
-      - name: Cache build
-        uses: actions/cache@v2.1.2
-        with:
-          path: ~/fe/build
-          key: ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}
-          restore-keys: |
-            ${{ runner.os }}-build-dev-
-            ${{ runner.os }}-build-dev-${{ hashFiles('**/fe/**') }}
       - run: npm --prefix ./fe install
       - run: npm --prefix ./fe run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
