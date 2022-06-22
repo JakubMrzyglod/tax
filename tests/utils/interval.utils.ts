@@ -1,9 +1,10 @@
-import { Interval, IntervalType } from '../../types/schedules';
+import { Interval } from '../../types/schedules';
+import { getWeek, getYear } from 'date-fns';
 
 export const getInterval = (): Interval => ({
   count: Infinity,
-  startDate: new Date(),
-  type: IntervalType.WEEKLY,
+  week: getWeek(new Date()),
+  year: getYear(new Date()),
   workTime: 540,
-  startTimes: [360],
+  start: [360],
 });

@@ -2,16 +2,20 @@ export type Schedule = {
   name: string;
 };
 
+export type Workweeks = {
+  [week: number]: Workday[];
+};
+
 export type Interval = {
-  startDate: Date;
-  type: IntervalType;
+  week: number;
+  year: number;
   count: number;
-  startTimes: number [];
+  start: number[];
   workTime: number;
 };
 
-export enum IntervalType {
-  DAILY,
-  WEEKLY,
-  MONTHLY,
-}
+export type Workday = {
+  start: number[];
+  workTime: number;
+  intervalId?: number;
+};

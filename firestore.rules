@@ -62,8 +62,9 @@ service cloud.firestore {
             && docData.startTimes is list
           }
 
+          // WORKWEEKS
 
-          match /months/{monthId} {
+          match /workweeks/{year} {
             allow write, update, read: if isOwner();
           }
         }

@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "db-types": "file:../types",
     "@types/styled-components": "^5.1.25"
   }
 }
