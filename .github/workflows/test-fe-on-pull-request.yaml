@@ -8,7 +8,7 @@ on:
     paths:
       - 'fe/src/**'
       - 'fe/package.json'
-      - 'types'
+      - 'types/**'
 
 jobs:
   lint_and_test:

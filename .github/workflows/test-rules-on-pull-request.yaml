@@ -11,6 +11,7 @@ on:
       - 'storage.rules'
       - 'jest.config.json'
       - 'jest.rules.config.json'
+      - 'types/**'
 
 jobs:
   lint_and_test:
