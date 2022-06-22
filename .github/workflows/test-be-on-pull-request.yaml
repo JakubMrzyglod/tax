@@ -11,6 +11,7 @@ on:
       - 'be/jest.config.js'
       - 'be/jest.functions.config.js'
       - 'jest.config.js'
+      - 'types'
 
 jobs:
   lint_and_test:
