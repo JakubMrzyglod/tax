@@ -92,14 +92,14 @@ describe('Schdules rules', () => {
   it('Should throw error for get all groups', async () => {
     await createNewGroup();
     await assertFails(
-      firestore.collection(`companies/${otherToken}/groups`).get()
+      firestore.collection(`companies/${otherToken}/schedules`).get()
     );
   });
 
-  it('Should throw error for get all groups', async () => {
+  it('Should return my all groups', async () => {
     await createNewGroup();
     await assertSucceeds(
-      firestore.collection(`companies/${token}/groups`).get()
+      firestore.collection(`companies/${token}/schedules`).get()
     );
   });
 });

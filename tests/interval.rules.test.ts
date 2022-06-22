@@ -9,33 +9,35 @@ import { datatype } from 'faker';
 import { CreateNewItemFn, createNewItemFn } from './utils/common.utils';
 import { updateDoc } from '@firebase/firestore';
 import { doc, getDoc } from 'firebase/firestore';
-import { getMonth, Month } from './utils/month.test.utils';
+import { Interval } from '../types/schedules';
+import { getInterval } from './utils/interval.utils';
 
-describe('Months rules', () => {
+describe('Interval rules', () => {
   const token = datatype.uuid();
   const otherToken = datatype.uuid();
   const defaultScheduleId = datatype.uuid();
-  const defaultMonthId = datatype.uuid();
+  const defaultIntervalId = datatype.uuid();
+
   const getPath = (
     userUid = token,
     scheduleId = defaultScheduleId,
-    monthId = defaultMonthId
-  ) => `companies/${userUid}/schedules/${scheduleId}/months/${monthId}`;
+    intervalId = defaultIntervalId
+  ) => `companies/${userUid}/schedules/${scheduleId}/intervals/${intervalId}`;
 
   let env: RulesTestEnvironment;
   let firestore: firebase.firestore.Firestore;
   let otherUserFirestore: firebase.firestore.Firestore;
 
-  let createNewMonth: CreateNewItemFn<Month>;
+  let createNewInterval: CreateNewItemFn<Interval>;
 
   beforeAll(async () => {
     env = await initializeTestEnvironment({ projectId: datatype.uuid() });
     firestore = env.authenticatedContext(token).firestore();
     otherUserFirestore = env.authenticatedContext(otherToken).firestore();
-    createNewMonth = createNewItemFn({
+    createNewInterval = createNewItemFn({
       firestore,
       path: getPath(),
-      getItemData: getMonth,
+      getItemData: getInterval,
     });
   });
 
@@ -48,55 +50,57 @@ describe('Months rules', () => {
   });
 
   it('Should create new item', async () => {
-    await createNewMonth();
+    await createNewInterval();
   });
 
   it('Should update item', async () => {
-    const [docRef] = await createNewMonth();
-    const newMonthData = getMonth();
-    await assertSucceeds(updateDoc(docRef, newMonthData));
+    const [docRef] = await createNewInterval();
+    const newData = getInterval();
+    await assertSucceeds(updateDoc(docRef, newData));
   });
 
-  it('Should throw error for create month for other user id', async () => {
-    await createNewMonth({
+  it('Should throw error for create item for other user id', async () => {
+    await createNewInterval({
       path: getPath(datatype.uuid()),
       withSuccess: false,
     });
   });
 
-  it('Should throw error for update month for other user id', async () => {
-    const [{ path }] = await createNewMonth();
+  it('Should throw error for update item for other user id', async () => {
+    const [{ path }] = await createNewInterval();
     const docRef = doc(otherUserFirestore, path);
-    await assertFails(updateDoc(docRef, getMonth()));
+    await assertFails(updateDoc(docRef, getInterval()));
   });
 
-  it('Should get my group data', async () => {
-    const [docRef] = await createNewMonth();
+  it('Should get my item data', async () => {
+    const [docRef] = await createNewInterval();
     await assertSucceeds(getDoc(docRef));
   });
 
-  it('Should throw error for get other group data', async () => {
-    const [{ path }] = await createNewMonth();
+  it('Should throw error for get other item data', async () => {
+    const [{ path }] = await createNewInterval();
     const docRef = doc(otherUserFirestore, path);
     await assertFails(getDoc(docRef));
   });
 
-  it('Should throw error for get all groups', async () => {
-    await createNewMonth();
+  it('Should throw error for get all items', async () => {
+    await createNewInterval();
     await assertFails(
       firestore
         .collection(
-          `companies/${otherToken}/schedules/${defaultScheduleId}/months`
+          `companies/${otherToken}/schedules/${defaultScheduleId}/intervals`
         )
         .get()
     );
   });
 
-  it('Should throw error for get all groups', async () => {
-    await createNewMonth();
+  it('Should return all items', async () => {
+    await createNewInterval();
     await assertSucceeds(
       firestore
-        .collection(`companies/${token}/schedules/${defaultScheduleId}/months`)
+        .collection(
+          `companies/${token}/schedules/${defaultScheduleId}/intervals`
+        )
         .get()
     );
   });

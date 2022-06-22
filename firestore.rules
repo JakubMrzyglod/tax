@@ -1,7 +1,13 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /companies/{ownerId}/{allPaths=**} {
+
+    // COMPANY
+
+    match /companies/{ownerId} {
+      allow read: if isOwner()
+      allow write, update: if isOwner() && isValidCompany()
+
       function data () {
         return request.resource.data
       }
@@ -14,6 +20,7 @@ service cloud.firestore {
         return data().keys().hasOnly(['taxId', 'name', 'city', 'address'])
       }
 
+
       function isValidCompany() {
         let docData = data();
         return hasValidCompanyKeys()
@@ -23,28 +30,44 @@ service cloud.firestore {
         && docData.address is string
       }
 
-      allow read: if isOwner()
-      allow write, update: if isOwner() && isValidCompany()
+        // SCHEDULES
 
+        match /schedules/{scheduleId} {
+          allow write, update: if isOwner() && isSheduleGropu();
+          allow read, delete: if isOwner();
 
-      match /schedules/{scheduleId} {
-        function hasValidSheduleKeys () {
-          return data().keys().hasOnly(['name'])
+          function isSheduleGropu () {
+            let docData = data();
+            return hasValidSheduleKeys()
+            && docData.name is string
+          }
+
+          function hasValidSheduleKeys () {
+            return data().keys().hasOnly(['name'])
+          }
+
+          // INTERVALS
+        
+          match /intervals/{intervalId} {
+            allow write, update: if isOwner() && isInterval();
+            allow read: if isOwner();
+          }
+
+          function isInterval () {
+            let docData = data();
+            return docData.count is number
+            && docData.week is number
+            && docData.year is number
+            && docData.workTime is number
+            && docData.start is list
+          }
+
+          // WORKWEEKS
+
+          match /workweeks/{year} {
+            allow write, update, read: if isOwner();
+          }
         }
-
-        function isSheduleGropu () {
-          let docData = data();
-          return hasValidSheduleKeys()
-          && docData.name is string
-        }
-
-        allow write, update: if isOwner() && isSheduleGropu()
-
-
-        match /months/{monthId} {
-          allow write, update, read: if isOwner();
-        }
-      }
     }
   }
 }
