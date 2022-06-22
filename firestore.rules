@@ -34,6 +34,7 @@ service cloud.firestore {
 
         match /schedules/{scheduleId} {
           allow write, update: if isOwner() && isSheduleGropu();
+          allow read, delete: if isOwner();
 
           function isSheduleGropu () {
             let docData = data();
@@ -54,12 +55,11 @@ service cloud.firestore {
 
           function isInterval () {
             let docData = data();
-            return true
-            && docData.startDate is timestamp
-            && docData.type is number
-            && docData.count is number
+            return docData.count is number
+            && docData.week is number
+            && docData.year is number
             && docData.workTime is number
-            && docData.startTimes is list
+            && docData.start is list
           }
 
           // WORKWEEKS
