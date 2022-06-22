@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/be"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/fe"
+    schedule:
+      interval: "daily"
